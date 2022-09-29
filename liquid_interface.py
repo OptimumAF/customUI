@@ -1,6 +1,9 @@
 import wx
 import ctypes
-
+import numpy
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 user32 = ctypes.windll.user32
 screensize = int(user32.GetSystemMetrics(0)*.95), int(user32.GetSystemMetrics(1)*.95)
 buttonsize = int(screensize[0]*.1), int(screensize[0]*.05)
@@ -11,10 +14,28 @@ horizontalSpacer, verticalSpacer = int(screensize[0]*.1) + 5, int(screensize[0]*
 green_color = (57, 255, 20)
 red_color = (255, 87, 51)
 
+def fourGraphs():
+    figure = matplotlib.figure.Figure(figsize=(4, 4))
+    axes = figure.add_subplot(221)
+    axes.plot([0, 1, 2, 3, 4, 5], [2, 5, 7, 4, 3, 2])
+    axes2 = figure.add_subplot(222)
+    axes2.plot([0, 1, 2, 3, 4, 5], [2, 5, 7, 4, 3, 2])
+    axes3 = figure.add_subplot(223)
+    axes3.plot([0, 1, 2, 3, 4, 5], [2, 5, 7, 4, 3, 2])
+    axes4 = figure.add_subplot(224)
+    axes4.plot([0, 1, 2, 3, 4, 5], [2, 5, 7, 4, 3, 2])
+    return figure
+
 class MyFrame(wx.Frame):
     def __init__(self):
         super().__init__(parent=None, title='Control Systems', size=screensize)
         panel = wx.Panel(self)  # creates the panel
+
+
+        self.graphs = fourGraphs()
+        self.canvas = FigureCanvas(panel, -1, self.graphs)
+        self.canvas.SetPosition((horizontalSpacer*4,5))
+
 
         # Open All Valves
         self.open_all = wx.Button(panel, label = "Open All Valves", size = buttonsize, pos=(5,5))
