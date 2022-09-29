@@ -189,7 +189,7 @@ class MyFrame(wx.Frame):
         pass
 
     def kero_pid_press(self, event):  # adds functionality to the button
-        p, i, d = int(self.kero_prop.GetValue()), int(self.kero_int.GetValue()), int(self.kero_der.GetValue())
+        p, i, d = int(self.kero_prop.GetValue() or 0), int(self.kero_int.GetValue() or 0), int(self.kero_der.GetValue() or 0)
         print(p,i,d)
         self.kero_prop.SetValue(""), self.kero_int.SetValue(""), self.kero_der.SetValue("")
 
